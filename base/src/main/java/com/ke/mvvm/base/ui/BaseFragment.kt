@@ -82,6 +82,8 @@ abstract class BaseFragment(layoutId: Int) : Fragment(layoutId) {
     protected open fun setupSnackbar(viewModel: BaseViewModel) {
         viewModel.snackbarEvent.observe(viewLifecycleOwner) { action ->
             view?.apply {
+                //显示之前先隐藏软键盘，不然显示出来看不见
+                hideKeyboard()
                 Snackbar.make(this, action.message, action.duration).apply {
                     if (action.action != null && action.actionName != null) {
                         setAction(action.actionName) {
