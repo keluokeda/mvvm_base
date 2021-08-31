@@ -14,7 +14,7 @@ abstract class GetDataListUseCase<P, R>(private val coroutineDispatcher: Corouti
             }
         } catch (e: Exception) {
             //异常处理
-            return ListResult(errorMessage = "好像发生了一些错误", canRetry = true)
+            return ListResult(errorMessage = "好像发生了一些错误", canRetry = true, exception = e)
         }
     }
 
