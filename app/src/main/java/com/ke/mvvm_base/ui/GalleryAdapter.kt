@@ -19,6 +19,8 @@ class GalleryAdapter : BaseViewBindingAdapter<Photo, ItemPhotoBinding>() {
 
     }
 
+
+
     override fun bindItem(
         item: Photo,
         viewBinding: ItemPhotoBinding,

@@ -34,7 +34,14 @@ abstract class BaseViewBindingAdapter<T, VB : ViewBinding> :
 
         val position = getItemPosition(item)
 
-        bindItem(item, holder.viewBinding, getItemViewType(position), position)
+        bindItem(item, holder.viewBinding, getDefItemViewType(position), position)
+    }
+
+    /**
+     * 禁止重写此方法
+     */
+    final override fun getItemViewType(position: Int): Int {
+        return super.getItemViewType(position)
     }
 
     override fun setEmptyLayout(layoutId: Int) {
