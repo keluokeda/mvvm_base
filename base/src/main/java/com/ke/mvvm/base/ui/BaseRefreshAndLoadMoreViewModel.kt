@@ -8,7 +8,7 @@ import com.ke.mvvm.base.model.SnackbarAction
 import kotlinx.coroutines.launch
 
 abstract class BaseRefreshAndLoadMoreViewModel<P, R>(private val getDataListUseCase: GetDataListUseCase<P, R>) :
-    BaseListViewModel<R>() {
+    BaseViewModel(),IBaseRefreshAndLoadMoreViewModel<R> {
 
     private var currentIndex: Int = 0
 
@@ -29,16 +29,16 @@ abstract class BaseRefreshAndLoadMoreViewModel<P, R>(private val getDataListUseC
     /**
      * 是否显示刷新指示器
      */
-    val isRefreshing: LiveData<Boolean>
+    override val isRefreshing: LiveData<Boolean>
         get() = _isRefreshing
 
     private val _loadDataResult = MutableLiveData<Int>()
 
-    val loadDataResult: LiveData<Int>
+    override val loadDataResult: LiveData<Int>
         get() = _loadDataResult
 
 
-    open fun refresh() {
+    override fun refresh() {
         loadData(true)
     }
 
@@ -73,7 +73,7 @@ abstract class BaseRefreshAndLoadMoreViewModel<P, R>(private val getDataListUseC
     }
 
 
-    open fun loadMore() {
+    override fun loadMore() {
         loadData()
     }
 

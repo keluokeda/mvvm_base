@@ -1,54 +1,21 @@
 package com.ke.mvvm.base.ui
 
+import android.app.Activity
 import android.content.Context
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.snackbar.Snackbar
 
-abstract class BaseFragment(layoutId: Int) : Fragment(layoutId) {
-    /**
-     * 隐藏软键盘
-     */
-    fun hideKeyboard() {
-        activity?.apply {
-            val view = currentFocus
-            if (view != null) {
-                val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                manager.hideSoftInputFromWindow(view.windowToken, 0)
-                view.clearFocus()
-            }
-        }
+interface IBaseView {
 
-    }
-
-    /**
-     * 沉浸式状态栏
-     */
-    protected fun setTranslucentStatus(on: Boolean) {
-        val win: Window = activity?.window ?: return
-        val winParams = win.attributes
-        val bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-        if (on) {
-            winParams.flags = winParams.flags or bits
-        } else {
-            winParams.flags = winParams.flags and bits.inv()
-        }
-        win.attributes = winParams
-    }
-
-    fun onBackPressed() {
-        activity?.onBackPressed()
-    }
-
-    protected open fun setupRetryAndLoading(
+    fun setupRetryAndLoading(
         retryView: View,
         loadingView: View,
         contentView: View,
-        baseViewModel: BaseViewModel
+        baseViewModel: BaseViewModel,
+        viewLifecycleOwner: LifecycleOwner
     ) {
         baseViewModel.loadingViewVisible.observe(viewLifecycleOwner) {
             loadingView.isVisible = it
@@ -64,10 +31,11 @@ abstract class BaseFragment(layoutId: Int) : Fragment(layoutId) {
         }
     }
 
-    protected open fun setupRetry(
+    fun setupRetry(
         retryView: View,
         contentView: View,
-        viewModel: BaseViewModel
+        viewModel: IBaseViewModel,
+        viewLifecycleOwner: LifecycleOwner
     ) {
         retryView.setOnClickListener {
             viewModel.retry()
@@ -79,11 +47,18 @@ abstract class BaseFragment(layoutId: Int) : Fragment(layoutId) {
     }
 
 
-    protected open fun setupSnackbar(viewModel: BaseViewModel) {
+    /**
+     * 设置Snackbar
+     */
+    fun setupSnackbar(
+        viewModel: IBaseViewModel,
+        viewLifecycleOwner: LifecycleOwner,
+        view: View
+    ) {
         viewModel.snackbarEvent.observe(viewLifecycleOwner) { action ->
-            view?.apply {
+            view.apply {
                 //显示之前先隐藏软键盘，不然显示出来看不见
-                hideKeyboard()
+                hideKeyboard(view)
                 Snackbar.make(this, action.message, action.duration).apply {
                     if (action.action != null && action.actionName != null) {
                         setAction(action.actionName) {
@@ -93,5 +68,20 @@ abstract class BaseFragment(layoutId: Int) : Fragment(layoutId) {
                 }.show()
             }
         }
+    }
+
+    /**
+     * 隐藏软键盘
+     */
+    fun hideKeyboard(view: View) {
+        (view.context as? Activity)?.apply {
+            val target = currentFocus
+            if (target != null) {
+                val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                manager.hideSoftInputFromWindow(view.windowToken, 0)
+                view.clearFocus()
+            }
+        }
+
     }
 }
