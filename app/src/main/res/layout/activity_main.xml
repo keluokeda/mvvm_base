@@ -24,6 +24,15 @@
         android:text="可选上拉刷新和下拉加载"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/refresh_and_load_more"
-        />
+        app:layout_constraintTop_toBottomOf="@id/refresh_and_load_more" />
+
+    <Button
+        android:id="@+id/multi_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="多布局"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/refresh_and_load_more_options" />
 </androidx.constraintlayout.widget.ConstraintLayout>

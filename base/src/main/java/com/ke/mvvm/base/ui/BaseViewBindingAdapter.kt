@@ -15,7 +15,7 @@ abstract class BaseViewBindingAdapter<T, VB : ViewBinding> :
     BaseQuickAdapter<T, ViewBindingViewHolder<VB>>(0), IBaseAdapter<T, VB>, LoadMoreModule {
 
 
-    abstract fun createViewBinding(inflater: LayoutInflater, parent: ViewGroup): VB
+    abstract fun createViewBinding(inflater: LayoutInflater, parent: ViewGroup, viewType: Int): VB
 
     override fun onCreateDefViewHolder(
         parent: ViewGroup,
@@ -23,15 +23,18 @@ abstract class BaseViewBindingAdapter<T, VB : ViewBinding> :
     ): ViewBindingViewHolder<VB> {
 
 
-        val viewBinding = createViewBinding(LayoutInflater.from(parent.context), parent)
+        val viewBinding = createViewBinding(LayoutInflater.from(parent.context), parent, viewType)
         return ViewBindingViewHolder(viewBinding)
     }
 
-    abstract fun bindItem(item: T, viewBinding: VB)
+    abstract fun bindItem(item: T, viewBinding: VB, viewType: Int, position: Int)
 
 
     override fun convert(holder: ViewBindingViewHolder<VB>, item: T) {
-        bindItem(item, holder.viewBinding)
+
+        val position = getItemPosition(item)
+
+        bindItem(item, holder.viewBinding, getItemViewType(position), position)
     }
 
     override fun setEmptyLayout(layoutId: Int) {

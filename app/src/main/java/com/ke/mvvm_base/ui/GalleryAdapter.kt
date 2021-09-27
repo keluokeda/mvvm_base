@@ -9,18 +9,26 @@ import com.ke.mvvm_base.entity.Photo
 
 class GalleryAdapter : BaseViewBindingAdapter<Photo, ItemPhotoBinding>() {
 
+
     override fun createViewBinding(
         inflater: LayoutInflater,
-        parent: ViewGroup
+        parent: ViewGroup,
+        viewType: Int
     ): ItemPhotoBinding {
         return ItemPhotoBinding.inflate(inflater, parent, false)
+
     }
 
-    override fun bindItem(item: Photo, viewBinding: ItemPhotoBinding) {
+    override fun bindItem(
+        item: Photo,
+        viewBinding: ItemPhotoBinding,
+        viewType: Int,
+        position: Int
+    ) {
         Glide.with(viewBinding.image)
             .load(item.url)
             .into(viewBinding.image)
 
-        viewBinding.dateTime.text = item.dateTime
+//        viewBinding.dateTime.text = item.dateTime
     }
 }

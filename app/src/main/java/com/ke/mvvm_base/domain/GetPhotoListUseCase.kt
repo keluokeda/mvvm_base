@@ -36,7 +36,7 @@ class GetPhotoListUseCase : GetDataListUseCase<String, Photo>(Dispatchers.IO) {
 
 }
 
-private val imageList = arrayOf(
+ val imageList = arrayOf(
     "https://img0.baidu.com/it/u=1545407773,1465015052&fm=26&fmt=auto&gp=0.jpg",
     "https://img1.baidu.com/it/u=1871560431,1109072488&fm=26&fmt=auto&gp=0.jpg",
     "https://img1.baidu.com/it/u=2943008315,111705080&fm=26&fmt=auto&gp=0.jpg"

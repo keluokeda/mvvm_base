@@ -48,6 +48,10 @@ class MainActivity : AppCompatActivity() {
                 }.show()
         }
 
+        binding.multiItem.setOnClickListener {
+            startActivity(Intent(this, MultiItemActivity::class.java))
+        }
+
 
     }
 }

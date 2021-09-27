@@ -24,15 +24,6 @@
         app:layout_constraintStart_toStartOf="@id/image"
         app:layout_constraintTop_toTopOf="@id/image" />
 
-    <TextView
-        android:id="@+id/date_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="2020-12-12" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
