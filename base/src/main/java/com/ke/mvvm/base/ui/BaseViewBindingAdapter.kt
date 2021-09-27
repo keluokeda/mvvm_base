@@ -37,6 +37,7 @@ abstract class BaseViewBindingAdapter<T, VB : ViewBinding> :
         bindItem(item, holder.viewBinding, getDefItemViewType(position), position)
     }
 
+
     /**
      * 禁止重写此方法
      */
