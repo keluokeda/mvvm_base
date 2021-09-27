@@ -4,7 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
-interface IBaseRefreshAndLoadMoreView {
+interface IBaseRefreshAndLoadMoreView : IBaseView {
 
     /**
      * 空布局id
