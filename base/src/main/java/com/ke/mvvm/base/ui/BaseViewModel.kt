@@ -1,59 +1,39 @@
 package com.ke.mvvm.base.ui
 
-import androidx.annotation.MainThread
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ke.mvvm.base.livedata.SingleLiveEvent
+import androidx.lifecycle.viewModelScope
 import com.ke.mvvm.base.model.SnackbarAction
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 
 abstract class BaseViewModel : ViewModel(), IBaseViewModel {
 
+    private val _snackbarAction = Channel<SnackbarAction>(capacity = Channel.CONFLATED)
 
-    protected val _snackbarEvent = SingleLiveEvent<SnackbarAction>()
+    override val snackbarAction: Flow<SnackbarAction>
+        get() = _snackbarAction.receiveAsFlow()
 
-    override val snackbarEvent: LiveData<SnackbarAction>
-        get() = _snackbarEvent
+    private val _loadingDialogVisible = MutableStateFlow<String?>(null)
 
+    override val loadingDialogVisible: StateFlow<String?>
+        get() = _loadingDialogVisible
 
-    protected val _retryViewVisible = MutableLiveData<Boolean>()
+    protected open fun showSnackbar(snackbarAction: SnackbarAction) {
+        viewModelScope.launch {
+            _snackbarAction.send(snackbarAction)
+        }
+    }
 
-    override val retryViewVisible: LiveData<Boolean>
-        get() = _retryViewVisible
-
-
-    protected val _loadingViewVisible = MutableLiveData<Boolean>()
-
-    override val loadingViewVisible: LiveData<Boolean>
-        get() = _loadingViewVisible
-
-    protected val _contentViewVisible = MutableLiveData<Boolean>()
-
-    override val contentViewVisible: LiveData<Boolean>
-        get() = _contentViewVisible
-
-    /**
-     * 重试
-     */
-    override fun retry() {
+    protected open fun showLoadingDialog(message: String) {
+        _loadingDialogVisible.value = message
     }
 
 
-    /**
-     * 显示重试snackbar
-     */
-    @MainThread
-    protected open fun showRetrySnackBar(
-        message: String = "好像出了点问题，需要重试吗？",
-        actionName: String = "重试",
-        action: () -> Unit
-    ) {
-        _snackbarEvent.value = SnackbarAction(
-            message = message,
-            actionName = "重试",
-            action = action
-        )
+    protected open fun dismissLoadingDialog() {
+        _loadingDialogVisible.value = null
     }
-
-
 }

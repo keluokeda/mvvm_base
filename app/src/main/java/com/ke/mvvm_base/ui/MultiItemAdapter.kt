@@ -13,7 +13,7 @@ import com.ke.mvvm_base.entity.PhotoItem
 class MultiItemAdapter : BaseViewBindingAdapter<PhotoItem, ViewBinding>() {
 
 
-    override fun getDefItemViewType(position: Int): Int {
+    override fun getViewType(position: Int): Int {
         return when (getItem(position)) {
             is PhotoItem.DateTime -> TYPE_DATE_TIME
             is PhotoItem.Item -> TYPE_PHOTO

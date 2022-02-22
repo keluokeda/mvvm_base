@@ -35,8 +35,13 @@ interface IBaseAdapter<T, VB : ViewBinding> {
      * 加载更多的回调
      */
     fun setOnLoadMoreListener(
-        method: (Unit) -> Unit
+        method: () -> Unit
     )
+
+    /**
+     * 多布局的话重写这个方法
+     */
+    fun getViewType(position: Int): Int = 0
 
     /**
      * 转化为RecyclerView的Adapter

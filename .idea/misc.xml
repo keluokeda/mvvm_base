@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ASMSmaliIdeaPluginConfiguration">
+    <asm skipDebug="true" skipFrames="true" skipCode="false" expandFrames="false" />
+    <groovy codeStyle="LEGACY" />
+  </component>
   <component name="CMakeSettings">
     <configurations>
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
@@ -8,17 +12,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2140625" />
+        <entry key="app/src/main/res/layout/activity_content1.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/activity_content2.xml" value="0.21666666666666667" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_mine.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.15104166666666666" />
         <entry key="app/src/main/res/layout/item_date_time.xml" value="0.375" />
         <entry key="app/src/main/res/layout/item_photo.xml" value="0.15260416666666668" />
         <entry key="app/src/main/res/layout/layout_empty.xml" value="0.15260416666666668" />
+        <entry key="base/src/main/res/layout/ke_mvvm_layout_fragment_container.xml" value="0.21302083333333333" />
         <entry key="base/src/main/res/layout/layout_base_refresh_list_retry.xml" value="0.2046875" />
         <entry key="base/src/main/res/layout/layout_fragment_container.xml" value="0.2046875" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

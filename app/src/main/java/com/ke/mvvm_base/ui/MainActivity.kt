@@ -14,6 +14,23 @@ class MainActivity : AppCompatActivity() {
 
         val binding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.profile.setOnClickListener {
+            startActivity(
+                Intent(
+                    this, ProfileActivity::class.java
+                )
+            )
+        }
+
+        binding.mine.setOnClickListener {
+            startActivity(
+                Intent(
+                    this, MineActivity::class.java
+                )
+            )
+        }
+
         binding.refreshAndLoadMore.setOnClickListener {
             startActivity(
                 Intent(

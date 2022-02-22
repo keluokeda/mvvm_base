@@ -28,8 +28,3 @@ val <T> Result<T>.data: T?
     get() = (this as? Result.Success)?.data
 
 
-inline fun <reified T> Result<T>.updateOnSuccess(liveData: MutableLiveData<T>) {
-    if (this is Result.Success) {
-        liveData.value = data
-    }
-}

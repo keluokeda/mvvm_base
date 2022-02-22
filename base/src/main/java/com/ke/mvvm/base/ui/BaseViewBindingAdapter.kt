@@ -38,6 +38,13 @@ abstract class BaseViewBindingAdapter<T, VB : ViewBinding> :
     }
 
 
+    final override fun getDefItemViewType(position: Int): Int {
+        return getViewType(position)
+    }
+
+
+
+
     /**
      * 禁止重写此方法
      */
@@ -61,9 +68,9 @@ abstract class BaseViewBindingAdapter<T, VB : ViewBinding> :
         loadMoreModule.loadMoreFail()
     }
 
-    override fun setOnLoadMoreListener(method: (Unit) -> Unit) {
+    override fun setOnLoadMoreListener(method: () -> Unit) {
         loadMoreModule.setOnLoadMoreListener {
-            method.invoke(Unit)
+            method.invoke()
         }
     }
 

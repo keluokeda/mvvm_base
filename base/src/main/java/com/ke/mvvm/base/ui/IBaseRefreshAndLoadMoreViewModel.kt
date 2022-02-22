@@ -1,13 +1,14 @@
 package com.ke.mvvm.base.ui
 
 import androidx.lifecycle.LiveData
+import kotlinx.coroutines.flow.StateFlow
 
-interface IBaseRefreshAndLoadMoreViewModel<R> {
+interface IBaseRefreshAndLoadMoreViewModel<R>:IBaseViewModel {
 
     /**
      * 要显示到页面上的数据
      */
-    val dataList: LiveData<List<R>>
+    val dataList: StateFlow<List<R>?>
 
 
     /**
@@ -16,7 +17,7 @@ interface IBaseRefreshAndLoadMoreViewModel<R> {
      * @see LOAD_DATA_RESULT_ERROR
      * @see LOAD_DATA_RESULT_SUCCESS
      */
-    val loadDataResult: LiveData<Int>
+    val loadDataResult: StateFlow<Int?>
 
 
     /**
@@ -32,7 +33,7 @@ interface IBaseRefreshAndLoadMoreViewModel<R> {
     /**
      * SwipeRefreshLayout刷新指示器是否可见
      */
-    val isRefreshing: LiveData<Boolean>
+    val isRefreshing: StateFlow<Boolean?>
 
 
     companion object {

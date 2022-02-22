@@ -1,14 +1,15 @@
 package com.ke.mvvm.base.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.ke.mvvm.base.data.ListResult
 import com.ke.mvvm.base.domian.GetDataListUseCase
 import com.ke.mvvm.base.model.SnackbarAction
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 abstract class BaseRefreshAndLoadMoreViewModel<P, R>(private val getDataListUseCase: GetDataListUseCase<P, R>) :
-    BaseViewModel(),IBaseRefreshAndLoadMoreViewModel<R> {
+    BaseViewModel(), IBaseRefreshAndLoadMoreViewModel<R> {
 
     private var currentIndex: Int = 0
 
@@ -19,22 +20,22 @@ abstract class BaseRefreshAndLoadMoreViewModel<P, R>(private val getDataListUseC
      * 请求参数
      */
     protected abstract val parameters: P
-    protected val _dataList = MutableLiveData<List<R>>()
+    protected val _dataList = MutableStateFlow<List<R>?>(null)
 
-    override val dataList: LiveData<List<R>>
+    override val dataList: StateFlow<List<R>?>
         get() = _dataList
 
-    private val _isRefreshing = MutableLiveData<Boolean>()
+    private val _isRefreshing = MutableStateFlow<Boolean?>(null)
 
     /**
      * 是否显示刷新指示器
      */
-    override val isRefreshing: LiveData<Boolean>
+    override val isRefreshing: StateFlow<Boolean?>
         get() = _isRefreshing
 
-    private val _loadDataResult = MutableLiveData<Int>()
+    private val _loadDataResult = MutableStateFlow<Int?>(null)
 
-    override val loadDataResult: LiveData<Int>
+    override val loadDataResult: StateFlow<Int?>
         get() = _loadDataResult
 
 
@@ -48,6 +49,7 @@ abstract class BaseRefreshAndLoadMoreViewModel<P, R>(private val getDataListUseC
             if (forceRefresh) {
                 currentIndex = startIndex
                 _isRefreshing.value = true
+
             }
             val result = getDataListUseCase.invoke(currentIndex, parameters)
             _isRefreshing.value = false
@@ -62,7 +64,7 @@ abstract class BaseRefreshAndLoadMoreViewModel<P, R>(private val getDataListUseC
                     if (result.over) LOAD_DATA_RESULT_END else LOAD_DATA_RESULT_SUCCESS
 
             } else {
-                _snackbarEvent.value = SnackbarAction(message = result.errorMessage)
+                onLoadError(result)
                 _loadDataResult.value = LOAD_DATA_RESULT_ERROR
             }
 
@@ -70,6 +72,13 @@ abstract class BaseRefreshAndLoadMoreViewModel<P, R>(private val getDataListUseC
         }
 
 
+    }
+
+    /**
+     * 加载数据出错
+     */
+    protected open fun onLoadError(listResult: ListResult<R>) {
+        showSnackbar(SnackbarAction(message = listResult.errorMessage))
     }
 
 
