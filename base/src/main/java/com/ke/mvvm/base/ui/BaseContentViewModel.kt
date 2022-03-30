@@ -30,4 +30,8 @@ abstract class BaseContentViewModel<T> : BaseViewModel(), IBaseContentViewModel<
     }
 
 
+
+    protected fun getContent(): T? {
+        return (_viewStatus.value as? ViewStatus.Content<T>)?.data
+    }
 }
