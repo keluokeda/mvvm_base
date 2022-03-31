@@ -11,8 +11,8 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 /**
  * IBaseAdapter默认实现类
  */
-abstract class BaseViewBindingAdapter<T, VB : ViewBinding> :
-    BaseQuickAdapter<T, ViewBindingViewHolder<VB>>(0), IBaseAdapter<T, VB>, LoadMoreModule {
+abstract class BaseViewBindingAdapter<T, VB : ViewBinding>(data: MutableList<T>? = null) :
+    BaseQuickAdapter<T, ViewBindingViewHolder<VB>>(0, data), IBaseAdapter<T, VB>, LoadMoreModule {
 
 
     abstract fun createViewBinding(inflater: LayoutInflater, parent: ViewGroup, viewType: Int): VB
@@ -41,8 +41,6 @@ abstract class BaseViewBindingAdapter<T, VB : ViewBinding> :
     final override fun getDefItemViewType(position: Int): Int {
         return getViewType(position)
     }
-
-
 
 
     /**
