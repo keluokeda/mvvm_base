@@ -54,6 +54,7 @@ fun Fragment.collectSnackbarFlow(iBaseViewModel: IBaseViewModel) {
     (activity as? AppCompatActivity)?.collectSnackbarFlow(iBaseViewModel)
 }
 
+
 fun AppCompatActivity.collectSnackbarFlow(iBaseViewModel: IBaseViewModel) {
     launchAndRepeatWithViewLifecycle {
         iBaseViewModel.snackbarAction.collect {
@@ -66,6 +67,10 @@ fun AppCompatActivity.collectSnackbarFlow(iBaseViewModel: IBaseViewModel) {
             }
         }
     }
+}
+
+fun Fragment.collectLoadingDialog(iBaseViewModel: IBaseViewModel) {
+    (activity as? AppCompatActivity)?.collectLoadingDialog(iBaseViewModel)
 }
 
 fun AppCompatActivity.collectLoadingDialog(iBaseViewModel: IBaseViewModel) {
